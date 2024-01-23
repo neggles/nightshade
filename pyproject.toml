@@ -1,0 +1,69 @@
+[project]
+name = "nightshade"
+dynamic = ["version"]
+authors = [
+  { name = "Sand Lab, University of Chicago", email = "glaze-uchicago+ns@googlegroups.com" },
+]
+maintainers = [
+  { name = "Andi Powers-Holmes", email = "no@thankyou.com" },
+]
+requires-python = ">=3.9"
+dependencies = [
+  "diffusers >=0.25.0",
+  "transformers >= 4.35.0",
+  "torch >= 2.0.0",
+  "torchvision >= 0.12.0",
+  "cryptography >= 41.0.0",
+  "clip >= 0.2.0",
+  "nltk >= 3.8.1",
+  "lpips >= 0.1.4",
+  "einops >= 0.7.0",
+  "scikit-learn >= 1.4.0",
+]
+
+[project.scripts]
+nightshade = "nightshade.cli:main"
+
+[project.optional-dependencies]
+dev = [
+  "black >= 23.12.0",
+  "ruff >= 0.1.13, < 1.0.0",
+]
+all = [
+  "nightshade[dev]",
+]
+
+[build-system]
+requires = ["setuptools>=60", "wheel", "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "src/nightshade/_version.py"
+
+[tool.black]
+line-length = 110
+target-version = ['py310']
+ignore = [
+  'F841', # local variable assigned but never used
+  'E501', # line too long
+]
+
+[tool.ruff]
+line-length = 110
+target-version = 'py310'
+ignore = [
+  'F841', # local variable assigned but never used
+  'E501', # line too long
+  # 'F401', # imported but unused
+]
+extend-exclude = ["/usr/lib/*"]
+
+[tool.ruff.isort]
+combine-as-imports = true
+force-wrap-aliases = true
+known-local-folder = ["src"]
+known-first-party = ["neurosis"]
+
+[tool.pyright]
+include = ['src/**']
+exclude = ['/usr/lib/**']
